@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
-    public class Doctor
+    public class Doctor : Person
     {
-        public string? Name { get; set; }
-        public string? Surname { get; set; }
         public int Experience { get; set; }
-        public override string ToString() =>
-            $@"Fullname: {Name} {Surname}
-Experience: {Experience}";
+        public override string ToString()
+        {
+            return base.ToString() + $"\n\u001b[32mExperience:\u001b[0m {Experience}";
+        }
     }
 }
