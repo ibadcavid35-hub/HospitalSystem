@@ -1,16 +1,72 @@
 ﻿using ConsoleApp18.Models.Exception;
+using ConsoleApp18.Models.Registration.UserPanel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ConsoleApp18.Models.Registration.UserPanel
+namespace ConsoleApp18.Models.Registration
 {
-    public class UserRegistration
+    public class Person
     {
-        public static List<User>? Users { get; set; } = new List<User>();
-        public void UserRegistr()
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
+        public string? Email { get; set; }
+        public string? Number { get; set; }
+
+        public override string ToString()
+        {
+            return $"\u001b[32mName:\u001b[0m {Name}\n" +
+                   $"\u001b[32mSurname:\u001b[0m {Surname}\n" +
+                   $"\u001b[32mEmail:\u001b[0m {Email}\n" +
+                   $"\u001b[32mNumber:\u001b[0m {Number}";
+        }
+
+        public void ToEnter()
+        {
+            Console.Write("Enter your name: "); Name = Console.ReadLine();
+            Console.Write("Enter your surname: "); Surname = Console.ReadLine();
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Enter your email: "); Email = Console.ReadLine() ?? "";
+                    if (Regex.IsMatch(Email, emailPattern)) break;
+                    throw new InvalidFormatException("email");
+                }
+                catch (InvalidFormatException ife)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(ife.Message); Console.ResetColor();
+                }
+            }
+            string phonePattern = @"^(?:\+994|994|0)?(?:50|51|55|70|77|99|10|60)\d{7}$";
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Enter your phone number: "); string inputNumber = Console.ReadLine() ?? "";
+                    if (Regex.IsMatch(inputNumber, phonePattern))
+                    {
+                        Number = CommonNumber.CommonNumber.CommonPhoneNumber(inputNumber);
+                        break;
+                    }
+                    else throw new InvalidFormatException("phone number");
+                }
+                catch (InvalidFormatException ife)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(ife.Message); Console.ResetColor();
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("You have registered."); Console.ResetColor();
+        }
+
+        public void Registr<T>(List<T> People) where T : Person, new()
         {
             int select = 0;
             bool isRun = true;
@@ -38,12 +94,12 @@ namespace ConsoleApp18.Models.Registration.UserPanel
                     if (select == 0)
                     {
                         Console.Clear();
-                        User user = new User();
-                        user.ToEnter();
-                        bool isExist = Users!.Any(x => x.Email == user.Email || x.Number == user.Number);
+                        T person = new T();
+                        person.ToEnter();
+                        bool isExist = People!.Any(x => x.Email == person.Email || x.Number == person.Number);
                         try
                         {
-                            if (!isExist) { Users!.Add(user); }
+                            if (!isExist) { People!.Add(person); }
                             else throw new AlreadyExistExceptipon();
                         }
                         catch (AlreadyExistExceptipon aee)
@@ -85,7 +141,7 @@ namespace ConsoleApp18.Models.Registration.UserPanel
                                     Console.Clear();
                                     Console.Write("Enter your email: ");
                                     string inputEmail = Console.ReadLine() ?? "";
-                                    User? foundUser = Users!.FirstOrDefault(x => x.Email == inputEmail);
+                                    Person? foundUser = People!.FirstOrDefault(x => x.Email == inputEmail);
                                     try
                                     {
                                         if (foundUser != null)
@@ -114,7 +170,7 @@ namespace ConsoleApp18.Models.Registration.UserPanel
                                     Console.Write("Enter your phone number: ");
                                     string inputNumber = Console.ReadLine() ?? "";
                                     inputNumber = CommonNumber.CommonNumber.CommonPhoneNumber(inputNumber);
-                                    User? foundUser = Users!.FirstOrDefault(x => x.Number == inputNumber);
+                                    Person? foundUser = People!.FirstOrDefault(x => x.Number == inputNumber);
                                     try
                                     {
                                         if (foundUser != null)
@@ -146,4 +202,5 @@ namespace ConsoleApp18.Models.Registration.UserPanel
             }
         }
     }
+
 }

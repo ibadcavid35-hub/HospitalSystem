@@ -3,17 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 
 namespace ConsoleApp18.Models.Registration.UserPanel
 {
-    public class User : Person
+    public class UserRegistration : Person
     {
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        public static List<User> Users { get; set; } = new List<User>();
+     
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ConsoleApp18.Models.Registration;
+using ConsoleApp18.Models.Registration.DoctorPanel;
 using ConsoleApp18.Models.Registration.UserPanel;
 using System;
 using System.Collections.Generic;
@@ -35,19 +36,19 @@ namespace ConsoleApp18.Models.Menu
                 if (key.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { select++; }
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    if(select == 0)
+                    if (select == 0)
                     {
-                        
+
                     }
                     else if (select == 1)
-                    {
-                        UserRegistration userRegistration = new UserRegistration();
-                        userRegistration.UserRegistr();
+                    { 
+                        User user = new User();
+                        user.Registr(UserRegistration.Users);
                     }
                     else if (select == 2)
                     {
-                        Console.Clear();
-                        Console.ReadKey(true);
+                        Doctor doctor = new Doctor();
+                        doctor.Registr(DoctorRegistration.Doctors);
                     }
                     else if (select == 3)
                     {
