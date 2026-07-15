@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using ConsoleApp18.Models.History;
 
 namespace ConsoleApp18.Models.HospitalDepartments
 {
@@ -14,13 +16,14 @@ namespace ConsoleApp18.Models.HospitalDepartments
     {
         public static bool SelectDepartment(Person user)
         {
+            Logger.SaveToCheck("Department selected");
             int select = 0;
             bool isRun = true;
             Thread.Sleep(2000);
             DepartmentType[] departments = Enum.GetValues<DepartmentType>();
             while (isRun)
             {
-                Console.ResetColor();
+                Console.Clear();
                 Console.WriteLine("Please select a department:\n");
                 string[] choices = departments.Select(d => d.ToString()).Append("Back").ToArray();
                 for(int i=0; i<choices.Length; i++)
@@ -34,12 +37,12 @@ namespace ConsoleApp18.Models.HospitalDepartments
                     }
                     else
                     {
-                        Console.WriteLine($">>  {choices[i]}");
+                        Console.WriteLine($"    {choices[i]}");
                     }
                 }
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 if(key.Key == ConsoleKey.UpArrow && select > 0) { select--; }
-                if (key.Key == ConsoleKey.UpArrow && select < choices.Length - 1) { select++; }
+                if (key.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { select++; }
                 if(key.Key == ConsoleKey.Enter)
                 {
                     if (select == choices.Length - 1) { isRun = false; break; }
@@ -50,16 +53,17 @@ namespace ConsoleApp18.Models.HospitalDepartments
             return false;
         }
 
-        private static bool SelectDoctor(DepartmentType department,Person user)
+        private static bool SelectDoctor(DepartmentType department, Person user)
         {
-            var doctorInDept = DoctorRegistration.Doctors.Where(d=>d.Department == department).ToList();
+            Logger.SaveToCheck("Doctor selected");
+            var doctorInDept = DoctorRegistration.Doctors.Where(d => d.Department == department).ToList();
             if (!doctorInDept.Any())
             {
                 try
                 {
                     throw new NotFoundException("There is no doctor in this department right now.");
                 }
-                catch(NotFoundException nfe)
+                catch (NotFoundException nfe)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(nfe.Message);
@@ -74,16 +78,18 @@ namespace ConsoleApp18.Models.HospitalDepartments
             while (isRun)
             {
                 Console.Clear();
+                Console.ForegroundColor= ConsoleColor.DarkYellow;
                 Console.WriteLine($"Doctors working in the {department} department");
+                Console.ResetColor();
                 string[] choices = doctorInDept
                     .Select(d => $"Dr .{d.Name} {d.Surname} | {d.Experience} years of experience")
                     .Append("Back").ToArray();
-                for(int i=0;i<choices.Length; i++)
+                for (int i = 0; i < choices.Length; i++)
                 {
                     if (i == select)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
-                        Console.ForegroundColor= ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine($">>  {choices[i]}");
                         Console.ResetColor();
                     }
@@ -105,8 +111,9 @@ namespace ConsoleApp18.Models.HospitalDepartments
             return false;
         }
 
-        private static bool SelectSlot(Doctor doctor,Person user)
+        private static bool SelectSlot(Doctor doctor, Person user)
         {
+            Logger.SaveToCheck("Time slot selected");
             int select = 0;
             bool isRun = true;
             while (isRun)
@@ -114,9 +121,9 @@ namespace ConsoleApp18.Models.HospitalDepartments
                 Console.Clear();
                 Console.WriteLine($"Dr. {doctor.Name} {doctor.Surname} - reception hours:\n");
                 string[] choices = doctor.TimeSlot
-                    .Select(r => $"{r.Time} -> " + (r.IsReserved ? "\u001b[32mreserved\u001b[0m" : "\u001b[32mnot reserved\u001b[0m"))
+                    .Select(r => $"{r.Time} -> " + (r.IsReserved ? "\u001b[31mreserved\u001b[0m" : "\u001b[32mnot reserved\u001b[0m"))
                     .Append("Back").ToArray();
-                for(int i = 0; i < choices.Length; i++)
+                for (int i = 0; i < choices.Length; i++)
                 {
                     if (i == select)
                     {
@@ -135,7 +142,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
                 if (key.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { select++; }
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    if(select == choices.Length-1) { isRun = false;break; }
+                    if (select == choices.Length - 1) { isRun = false; break; }
                     var slot = doctor.TimeSlot[select];
                     if (slot.IsReserved)
                     {
@@ -144,7 +151,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
                         {
                             throw new ReservedException();
                         }
-                        catch(ReservedException re)
+                        catch (ReservedException re)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine(re.Message);
@@ -156,7 +163,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
                     }
                     slot.IsReserved = true;
                     slot.ReservedByName = $"{user.Name} {user.Surname}";
-                    slot.ReservedByPhone = doctor.Number;
+                    slot.ReservedByPhone = user.Number;
                     FileHelper.SaveData(DoctorRegistration.Doctors, "doctors");
 
                     Console.Clear();

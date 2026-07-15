@@ -8,6 +8,6 @@ namespace ConsoleApp18.Models.Exception
 {
     public class NotFoundException : ApplicationException
     {
-        public NotFoundException(string message) : base($"User not found with this {message}! Please register.\"") { }
+        public NotFoundException(string message) : base(message) { }
     }
 }

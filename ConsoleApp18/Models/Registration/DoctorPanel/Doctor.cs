@@ -20,7 +20,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
             new TimeSlot { Time = "15:00-17:00" }
         };
 
-        public void ToEnterExtra()
+        public override void ToEnterExtra()
         {
             Console.Write("Enter your experience (years): ");
             int experience;

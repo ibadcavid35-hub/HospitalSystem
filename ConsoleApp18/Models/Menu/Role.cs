@@ -1,4 +1,5 @@
-﻿using ConsoleApp18.Models.Registration;
+﻿using ConsoleApp18.Models.History;
+using ConsoleApp18.Models.Registration;
 using ConsoleApp18.Models.Registration.DoctorPanel;
 using ConsoleApp18.Models.Registration.UserPanel;
 using System;
@@ -13,6 +14,7 @@ namespace ConsoleApp18.Models.Menu
     {
         public static void ChooseRole()
         {
+            Logger.SaveToCheck("Role was chosen");
             int select = 0;
             bool isRun = true;
             while (isRun)

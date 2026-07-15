@@ -1,6 +1,7 @@
 ﻿using ConsoleApp18.Models.Exception;
 using ConsoleApp18.Models.Files;
 using ConsoleApp18.Models.HospitalDepartments;
+using ConsoleApp18.Models.History;
 using ConsoleApp18.Models.Registration.UserPanel;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace ConsoleApp18.Models.Registration
 
         public void ToEnter()
         {
+            Logger.SaveToCheck("Entered");
             Console.Write("Enter your name: "); Name = Console.ReadLine();
             Console.Write("Enter your surname: "); Surname = Console.ReadLine();
             string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
@@ -64,13 +66,16 @@ namespace ConsoleApp18.Models.Registration
                     Console.WriteLine(ife.Message); Console.ResetColor();
                 }
             }
+            ToEnterExtra();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("You have registered."); Console.ResetColor();
         }
 
+        public virtual void ToEnterExtra() { }
 
         public void Registr<T>(List<T> People) where T : Person, new()
         {
+            Logger.SaveToCheck("Registered");
             int select = 0;
             bool isRun = true;
             while (isRun)
@@ -187,7 +192,7 @@ namespace ConsoleApp18.Models.Registration
                                         }
                                         else
                                         {
-                                            throw new NotFoundException(inputEmail);
+                                            throw new NotFoundException($"User not found with this {inputEmail}! Please register.\"");
                                         }
                                     }
                                     catch (NotFoundException nfe)
@@ -230,7 +235,7 @@ namespace ConsoleApp18.Models.Registration
                                         }
                                         else
                                         {
-                                            throw new NotFoundException(inputNumber);
+                                            throw new NotFoundException($"User not found with this {inputNumber}! Please register.\"");
                                         }
                                     }
                                     catch (NotFoundException nfe)
