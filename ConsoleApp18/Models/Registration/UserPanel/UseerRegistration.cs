@@ -1,4 +1,5 @@
 ﻿using ConsoleApp18.Models.Exception;
+using ConsoleApp18.Models.Files;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,10 @@ namespace ConsoleApp18.Models.Registration.UserPanel
 {
     public class UserRegistration : Person
     {
-        public static List<User> Users { get; set; } = new List<User>();
-     
+        public static List<User> Users { get; set; } = FileHelper.LoadData<User>("users");
+
+
+
+
     }
 }

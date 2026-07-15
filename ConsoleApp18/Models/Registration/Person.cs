@@ -1,4 +1,6 @@
 ﻿using ConsoleApp18.Models.Exception;
+using ConsoleApp18.Models.Files;
+using ConsoleApp18.Models.HospitalDepartments;
 using ConsoleApp18.Models.Registration.UserPanel;
 using System;
 using System.Collections.Generic;
@@ -99,7 +101,13 @@ namespace ConsoleApp18.Models.Registration
                         bool isExist = People!.Any(x => x.Email == person.Email || x.Number == person.Number);
                         try
                         {
-                            if (!isExist) { People!.Add(person); }
+                            if (!isExist)
+                            {
+                                People!.Add(person);
+                                string fileName = typeof(T) == typeof(User) ? "users" : "doctors";
+                                FileHelper.SaveData(People, fileName);
+                                Department.SelectDepartment();
+                            }
                             else throw new AlreadyExistExceptipon();
                         }
                         catch (AlreadyExistExceptipon aee)
@@ -132,8 +140,8 @@ namespace ConsoleApp18.Models.Registration
                                 }
                             }
                             ConsoleKeyInfo key2 = Console.ReadKey(true);
-                            if (key2.Key == ConsoleKey.UpArrow && select > 0) { choose--; }
-                            if (key2.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { choose++; }
+                            if (key2.Key == ConsoleKey.UpArrow && choose > 0) { choose--; }
+                            if (key2.Key == ConsoleKey.DownArrow && choose < choices.Length - 1) { choose++; }
                             if (key2.Key == ConsoleKey.Enter)
                             {
                                 if (choose == 0)
@@ -150,6 +158,7 @@ namespace ConsoleApp18.Models.Registration
                                             Console.WriteLine("\n--- Login Successful! Your Profile ---");
                                             Console.ResetColor();
                                             Console.WriteLine(foundUser);
+                                            Department.SelectDepartment();
                                         }
                                         else
                                         {
@@ -161,8 +170,7 @@ namespace ConsoleApp18.Models.Registration
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine(nfe.Message); Console.ResetColor();
                                     }
-                                    Console.WriteLine("Press any key to continue");
-                                    Console.ReadKey(true);
+                                    
                                 }
                                 else if (choose == 1)
                                 {
@@ -179,6 +187,7 @@ namespace ConsoleApp18.Models.Registration
                                             Console.WriteLine("\n--- Login Successful! Your Profile ---");
                                             Console.ResetColor();
                                             Console.WriteLine(foundUser);
+                                            Department.SelectDepartment();
                                         }
                                         else
                                         {
@@ -190,8 +199,7 @@ namespace ConsoleApp18.Models.Registration
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine(nfe.Message); Console.ResetColor();
                                     }
-                                    Console.WriteLine("Press any key to continue");
-                                    Console.ReadKey(true);
+                                  
                                 }
                                 else if (choose == 2) { isLogged = false; break; }
                             }
