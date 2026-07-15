@@ -68,6 +68,7 @@ namespace ConsoleApp18.Models.Registration
             Console.WriteLine("You have registered."); Console.ResetColor();
         }
 
+
         public void Registr<T>(List<T> People) where T : Person, new()
         {
             int select = 0;
@@ -106,7 +107,17 @@ namespace ConsoleApp18.Models.Registration
                                 People!.Add(person);
                                 string fileName = typeof(T) == typeof(User) ? "users" : "doctors";
                                 FileHelper.SaveData(People, fileName);
-                                Department.SelectDepartment();
+                                if (typeof(T) == typeof(User))
+                                {
+                                    bool registered = Department.SelectDepartment(person);
+                                    if (registered) { isRun = false; }
+                                }
+                                else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("Your registration has been recorded. Your application for admission has been sent to the Admin.");
+                                    Console.ResetColor();
+                                }
                             }
                             else throw new AlreadyExistExceptipon();
                         }
@@ -158,7 +169,21 @@ namespace ConsoleApp18.Models.Registration
                                             Console.WriteLine("\n--- Login Successful! Your Profile ---");
                                             Console.ResetColor();
                                             Console.WriteLine(foundUser);
-                                            Department.SelectDepartment();
+                                            if (typeof(T) == typeof(User))
+                                            {
+                                                bool registered = Department.SelectDepartment(foundUser);
+                                                if (registered) { isLogged = false; isRun = false; }
+                                            }
+                                            else
+                                            {
+
+                                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                                Console.WriteLine("You can check your job application status in the Admin Panel.");
+                                                Console.ResetColor();
+                                                Console.WriteLine("Press any key to continue...");
+                                                Console.ReadKey(true);
+
+                                            }
                                         }
                                         else
                                         {
@@ -170,7 +195,7 @@ namespace ConsoleApp18.Models.Registration
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine(nfe.Message); Console.ResetColor();
                                     }
-                                    
+
                                 }
                                 else if (choose == 1)
                                 {
@@ -187,7 +212,21 @@ namespace ConsoleApp18.Models.Registration
                                             Console.WriteLine("\n--- Login Successful! Your Profile ---");
                                             Console.ResetColor();
                                             Console.WriteLine(foundUser);
-                                            Department.SelectDepartment();
+                                            if (typeof(T) == typeof(User))
+                                            {
+                                                bool registered = Department.SelectDepartment(foundUser);
+                                                if (registered) { isLogged = false; isRun = false; }
+                                            }
+                                            else
+                                            {
+
+                                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                                Console.WriteLine("You can check your job application status in the Admin Panel.");
+                                                Console.ResetColor();
+                                                Console.WriteLine("Press any key to continue...");
+                                                Console.ReadKey(true);
+
+                                            }
                                         }
                                         else
                                         {
@@ -199,7 +238,7 @@ namespace ConsoleApp18.Models.Registration
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine(nfe.Message); Console.ResetColor();
                                     }
-                                  
+
                                 }
                                 else if (choose == 2) { isLogged = false; break; }
                             }

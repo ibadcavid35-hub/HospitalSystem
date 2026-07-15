@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ConsoleApp18.Models.Exception;
+using ConsoleApp18.Models.Files;
+using ConsoleApp18.Models.Registration;
+using ConsoleApp18.Models.Registration.DoctorPanel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,51 +12,163 @@ namespace ConsoleApp18.Models.HospitalDepartments
 {
     public static class Department
     {
-        public static void SelectDepartment()
+        public static bool SelectDepartment(Person user)
         {
             int select = 0;
             bool isRun = true;
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
+            DepartmentType[] departments = Enum.GetValues<DepartmentType>();
             while (isRun)
             {
-                Console.Clear();
-                string[] choice = { "Pediatrics", "Traumatology", "Dentistry", "Back" };
-                for (int i = 0; i < choice.Length; i++)
+                Console.ResetColor();
+                Console.WriteLine("Please select a department:\n");
+                string[] choices = departments.Select(d => d.ToString()).Append("Back").ToArray();
+                for(int i=0; i<choices.Length; i++)
                 {
-                    if(i == select)
+                    if (i == select)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
-                        Console.WriteLine($">>  {choice[i]}"); Console.ResetColor();
+                        Console.WriteLine($">>  {choices[i]}");
+                        Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"    {choice[i]}");
+                        Console.WriteLine($">>  {choices[i]}");
                     }
                 }
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 if(key.Key == ConsoleKey.UpArrow && select > 0) { select--; }
-                if (key.Key == ConsoleKey.DownArrow && select < choice.Length - 1) { select++; }
+                if (key.Key == ConsoleKey.UpArrow && select < choices.Length - 1) { select++; }
                 if(key.Key == ConsoleKey.Enter)
                 {
-                    if (select == 0)
-                    {
-
-                        Console.ReadKey(true);
-                    }
-                    else if (select == 1)
-                    {
-
-                        Console.ReadKey(true);
-                    }
-                    else if (select == 2)
-                    {
-
-                        Console.ReadKey(true);
-                    }
-                    else if (select == 3) { isRun = false; break; }
+                    if (select == choices.Length - 1) { isRun = false; break; }
+                    bool reserved = SelectDoctor(departments[select], user);
+                    if (reserved) { return true; }
                 }
             }
+            return false;
+        }
+
+        private static bool SelectDoctor(DepartmentType department,Person user)
+        {
+            var doctorInDept = DoctorRegistration.Doctors.Where(d=>d.Department == department).ToList();
+            if (!doctorInDept.Any())
+            {
+                try
+                {
+                    throw new NotFoundException("There is no doctor in this department right now.");
+                }
+                catch(NotFoundException nfe)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(nfe.Message);
+                    Console.ResetColor();
+                }
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey(true);
+                return false;
+            }
+            int select = 0;
+            bool isRun = true;
+            while (isRun)
+            {
+                Console.Clear();
+                Console.WriteLine($"Doctors working in the {department} department");
+                string[] choices = doctorInDept
+                    .Select(d => $"Dr .{d.Name} {d.Surname} | {d.Experience} years of experience")
+                    .Append("Back").ToArray();
+                for(int i=0;i<choices.Length; i++)
+                {
+                    if (i == select)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor= ConsoleColor.Black;
+                        Console.WriteLine($">>  {choices[i]}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"    {choices[i]}");
+                    }
+                }
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.UpArrow && select > 0) { select--; }
+                if (key.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { select++; }
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    if (select == choices.Length - 1) { isRun = false; break; }
+                    bool reserved = SelectSlot(doctorInDept[select], user);
+                    if (reserved) { return true; }
+                }
+            }
+            return false;
+        }
+
+        private static bool SelectSlot(Doctor doctor,Person user)
+        {
+            int select = 0;
+            bool isRun = true;
+            while (isRun)
+            {
+                Console.Clear();
+                Console.WriteLine($"Dr. {doctor.Name} {doctor.Surname} - reception hours:\n");
+                string[] choices = doctor.TimeSlot
+                    .Select(r => $"{r.Time} -> " + (r.IsReserved ? "\u001b[32mreserved\u001b[0m" : "\u001b[32mnot reserved\u001b[0m"))
+                    .Append("Back").ToArray();
+                for(int i = 0; i < choices.Length; i++)
+                {
+                    if (i == select)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine($">>  {choices[i]}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"    {choices[i]}");
+                    }
+                }
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.UpArrow && select > 0) { select--; }
+                if (key.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { select++; }
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    if(select == choices.Length-1) { isRun = false;break; }
+                    var slot = doctor.TimeSlot[select];
+                    if (slot.IsReserved)
+                    {
+                        Console.Clear();
+                        try
+                        {
+                            throw new ReservedException();
+                        }
+                        catch(ReservedException re)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(re.Message);
+                            Console.ResetColor();
+                        }
+                        Console.WriteLine("Press any key to continue");
+                        Console.ReadKey(true);
+                        continue;
+                    }
+                    slot.IsReserved = true;
+                    slot.ReservedByName = $"{user.Name} {user.Surname}";
+                    slot.ReservedByPhone = doctor.Number;
+                    FileHelper.SaveData(DoctorRegistration.Doctors, "doctors");
+
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"{user.Name} {user.Surname}, You have an appointment with Dr. {doctor.Name} {doctor.Surname} at {slot.Time}.");
+                    Console.ResetColor();
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey(true);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
