@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ConsoleApp18.Models.Email
 {
     public static class EmailService
@@ -31,10 +32,7 @@ namespace ConsoleApp18.Models.Email
                     $"Department: {doctor.Department}\n" +
                     $"Expierence: {doctor.Experience}";
 
-                if (!string.IsNullOrEmpty(doctor.CVPath) && System.IO.File.Exists(doctor.CVPath))
-                {
-                    mail.Attachments.Add(new Attachment(doctor.CVPath));
-                }
+              
 
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
                 smtpServer.Port = 587;
@@ -46,7 +44,9 @@ namespace ConsoleApp18.Models.Email
             }
             catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("There was a SMTP error: " + ex.Message);
+                Console.ResetColor();
             }
         }
     }

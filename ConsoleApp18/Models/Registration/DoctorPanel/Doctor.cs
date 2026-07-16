@@ -16,7 +16,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
             new TimeSlot { Time = "12:00-14:00" },
             new TimeSlot { Time = "15:00-17:00" }
         };
-        public string? CVPath { get; set; }
+ 
         public bool IsApproved { get; set; }
 
         public override void ToEnterExtra()
@@ -65,7 +65,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
                 {
                     Department = departments[select];
 
-                    this.CVPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "doctor_cv.pdf");
+                    
                     this.IsApproved = false;
                     List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(true);
                     pendingList.Add(this);

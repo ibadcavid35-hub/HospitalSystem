@@ -1,6 +1,4 @@
 ﻿using ConsoleApp18.Models.Registration.DoctorPanel;
-using ConsoleApp18.Models.Registration.DoctorPanel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +14,9 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
         {
             Logger.SaveToCheck("Approve Doctor");
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("=== Admin confirmation panel ===");
+            Console.ResetColor();
 
             List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(isPendingFile: true);
 
@@ -49,6 +49,7 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
 
                 pendingList.Remove(approvedDoc);
                 DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
+              
 
                 Console.WriteLine($"\n[Successful] {approvedDoc.Name} {approvedDoc.Surname} approved and added to the main system!");
             }

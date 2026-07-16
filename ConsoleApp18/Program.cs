@@ -8,7 +8,6 @@ namespace ConsoleApp18
         static void Main(string[] args)
         {
             Role.ChooseRole();
-
         }
     }
 }
