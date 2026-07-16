@@ -20,12 +20,16 @@ namespace ConsoleApp18.Models.Email
 
             try
             {
-   
+
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress(adminEmail);
-                mail.To.Add(adminEmail); 
+                mail.To.Add(adminEmail);
                 mail.Subject = $"[New doctor's appointment] - {doctor.Name}";
-                mail.Body = $"Admin, there is a new request:\nName: {doctor.Name} {doctor.Surname}\nEmail: {doctor.Email}";
+                mail.Body = $"Admin, there is a new request:\n" +
+                    $"Name: {doctor.Name} {doctor.Surname}\n" +
+                    $"Email: {doctor.Email}\n" +
+                    $"Department: {doctor.Department}\n" +
+                    $"Expierence: {doctor.Experience}";
 
                 if (!string.IsNullOrEmpty(doctor.CVPath) && System.IO.File.Exists(doctor.CVPath))
                 {

@@ -12,8 +12,5 @@ namespace ConsoleApp18.Models.Registration.UserPanel
     {
         public static List<User> Users { get; set; } = FileHelper.LoadData<User>("users");
 
-
-
-
     }
 }

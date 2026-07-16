@@ -30,14 +30,14 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
             Console.WriteLine("Pending applications\n------------------------------------");
             foreach (var doc in pendingList)
             {
-                Console.WriteLine($"Həkim: {doc.Name} | Email: {doc.Email} | Kafedra: {doc.Department}");
+                Console.WriteLine($"Dr. {doc.Name} | Email: {doc.Email} | Department: {doc.Department}");
             }
             Console.WriteLine("------------------------------------");
 
             Console.Write("\nEnter the email address of the doctor you want to verify: ");
             string selectedEmail = Console.ReadLine();
 
-            Doctor approvedDoc = pendingList.Find(d => d.Email.Equals(selectedEmail, StringComparison.OrdinalIgnoreCase))?? new Doctor();
+            Doctor approvedDoc = pendingList.Find(d => d.Email.Equals(selectedEmail, StringComparison.OrdinalIgnoreCase));
 
             if (approvedDoc != null)
             {
@@ -47,7 +47,6 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
                 mainList.Add(approvedDoc);
                 DoctorRecruitment.SaveDoctors(mainList, isPendingFile: false);
 
-                // Müvəqqəti siyahıdan silirik
                 pendingList.Remove(approvedDoc);
                 DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
 
@@ -59,10 +58,10 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
                 {
                     throw new NotFoundException("No doctor's appointment was found that matched the email address entered.");
                 }
-                catch(NotFoundException nfe)
+                catch (NotFoundException nfe)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(nfe.Message);Console.ResetColor();
+                    Console.WriteLine(nfe.Message); Console.ResetColor();
                 }
             }
             Console.ReadLine();

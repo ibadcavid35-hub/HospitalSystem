@@ -22,8 +22,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
             {
                 string path = isPendingFile ? PendingFilePath : MainFilePath;
 
-                if (!File.Exists(path))
-                    return new List<Doctor>();
+                if (!File.Exists(path)) return new List<Doctor>();
 
                 try
                 {

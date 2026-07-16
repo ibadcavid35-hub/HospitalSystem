@@ -17,7 +17,7 @@ namespace ConsoleApp18.Models.Files
             IncludeFields = true
         };
 
-        public static void SaveData<T>(List<T> data,string fileName) where T: Person
+        public static void SaveData<T>(List<T> data, string fileName) where T : Person
         {
             string filePath = $"{fileName}.json";
             string json = JsonSerializer.Serialize(data, serializerOptions);

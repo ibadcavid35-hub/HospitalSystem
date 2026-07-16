@@ -67,16 +67,20 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
 
                     this.CVPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "doctor_cv.pdf");
                     this.IsApproved = false;
-                    List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(isPendingFile: true);
+                    List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(true);
                     pendingList.Add(this);
-                    DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
+                    DoctorRecruitment.SaveDoctors(pendingList, true);
                     EmailService.SendCVtoAdmin(this);
-                    Console.WriteLine("\n[MƏLUMAT]: CV faylınız sistem tərəfindən avtomatik əlavə olundu və adminə göndərildi!");
-                    isRun = false; 
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nYour CV file has been automatically added by the system and sent to the admin!");
+                    Console.ResetColor();
+                    Console.ReadKey(true);
+                    isRun = false;
                 }
 
             }
         }
+
         public override string ToString()
         {
             return base.ToString() + $"\n\u001b[32mExperience:\u001b[0m {Experience}";

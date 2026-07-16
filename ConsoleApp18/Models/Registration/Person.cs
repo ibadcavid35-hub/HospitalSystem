@@ -117,12 +117,6 @@ namespace ConsoleApp18.Models.Registration
                                     bool registered = Department.SelectDepartment(person);
                                     if (registered) { isRun = false; }
                                 }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine("Your registration has been recorded. Your application for admission has been sent to the Admin.");
-                                    Console.ResetColor();
-                                }
                             }
                             else throw new AlreadyExistExceptipon();
                         }

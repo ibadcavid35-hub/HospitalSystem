@@ -8,6 +8,6 @@ namespace ConsoleApp18.Models.CustomException
 {
     public class ReservedException : ApplicationException
     {
-        public ReservedException():base("This time is already reserved, please choose another time.") { }
+        public ReservedException() : base("This time is already reserved, please choose another time.") { }
     }
 }

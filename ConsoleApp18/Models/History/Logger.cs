@@ -11,9 +11,9 @@ namespace ConsoleApp18.Models.History
     {
         public static void SaveToCheck(string content)
         {
-            var logger = Path.Combine(AppContext.BaseDirectory, "check","checks.log");
+            var logger = Path.Combine(AppContext.BaseDirectory, "check", "checks.log");
             Directory.CreateDirectory(Path.GetDirectoryName(logger) ?? "");
-            using var log = new LoggerConfiguration().WriteTo.File(logger,rollingInterval:RollingInterval.Day)
+            using var log = new LoggerConfiguration().WriteTo.File(logger, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
             log.Information(content);
         }

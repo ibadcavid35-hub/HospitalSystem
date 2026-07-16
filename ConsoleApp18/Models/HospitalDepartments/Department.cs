@@ -26,7 +26,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
                 Console.Clear();
                 Console.WriteLine("Please select a department:\n");
                 string[] choices = departments.Select(d => d.ToString()).Append("Back").ToArray();
-                for(int i=0; i<choices.Length; i++)
+                for (int i = 0; i < choices.Length; i++)
                 {
                     if (i == select)
                     {
@@ -41,9 +41,9 @@ namespace ConsoleApp18.Models.HospitalDepartments
                     }
                 }
                 ConsoleKeyInfo key = Console.ReadKey(true);
-                if(key.Key == ConsoleKey.UpArrow && select > 0) { select--; }
+                if (key.Key == ConsoleKey.UpArrow && select > 0) { select--; }
                 if (key.Key == ConsoleKey.DownArrow && select < choices.Length - 1) { select++; }
-                if(key.Key == ConsoleKey.Enter)
+                if (key.Key == ConsoleKey.Enter)
                 {
                     if (select == choices.Length - 1) { isRun = false; break; }
                     bool reserved = SelectDoctor(departments[select], user);
@@ -56,7 +56,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
         private static bool SelectDoctor(DepartmentType department, Person user)
         {
             Logger.SaveToCheck("Doctor selected");
-            var doctorInDept = DoctorRegistration.Doctors.Where(d => d.Department == department).ToList();
+            var doctorInDept = DoctorRegistration.Doctors.Where(d => d.Department == department && d.IsApproved == true).ToList();
             if (!doctorInDept.Any())
             {
                 try
@@ -78,7 +78,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
             while (isRun)
             {
                 Console.Clear();
-                Console.ForegroundColor= ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"Doctors working in the {department} department");
                 Console.ResetColor();
                 string[] choices = doctorInDept

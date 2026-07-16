@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
-    public class DoctorRegistration:Person
+    public class DoctorRegistration : Person
     {
         public static List<Doctor> Doctors { get; set; } = FileHelper.LoadData<Doctor>("doctors");
-        
-   
+
+
     }
 }
