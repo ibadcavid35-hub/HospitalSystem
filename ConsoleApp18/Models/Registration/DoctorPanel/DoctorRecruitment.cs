@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleApp18.Models.History;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
 
         public static void SaveDoctors(List<Doctor> doctors,bool isPendingFile)
         {
+            Logger.SaveToCheck("Email sent.");
             string path = (isPendingFile) ? pendingPath : doctorPath;
             var options = new JsonSerializerOptions { WriteIndented = true };
             string save = JsonSerializer.Serialize(doctors, options);

@@ -1,11 +1,8 @@
 ﻿using ConsoleApp18.Models.Appointments;
+using ConsoleApp18.Models.CustomException;
+using ConsoleApp18.Models.Email;
 using ConsoleApp18.Models.HospitalDepartments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleApp18.Models.Exception;
+using ConsoleApp18.Models.Registration.DoctorPanel.ConsoleApp18.Models.Registration.DoctorPanel;
 
 namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
@@ -32,7 +29,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
                 {
                     throw new InvalidFormatException("Invalid input! Please enter a positive number.");
                 }
-                catch(InvalidFormatException ife)
+                catch (InvalidFormatException ife)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(ife.Message);
@@ -67,8 +64,17 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
                 if (key.Key == ConsoleKey.Enter)
                 {
                     Department = departments[select];
-                    isRun = false;
+
+                    this.CVPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "doctor_cv.pdf");
+                    this.IsApproved = false;
+                    List<Doctor> pendingList = JsonStorage.ReadDoctors(isPendingFile: true);
+                    pendingList.Add(this);
+                    JsonStorage.SaveDoctors(pendingList, isPendingFile: true);
+                    EmailService.SendCVtoAdmin(this);
+                    Console.WriteLine("\n[MƏLUMAT]: CV faylınız sistem tərəfindən avtomatik əlavə olundu və adminə göndərildi!");
+                    isRun = false; 
                 }
+
             }
         }
         public override string ToString()

@@ -1,4 +1,5 @@
-﻿using ConsoleApp18.Models.Registration.DoctorPanel;
+﻿using ConsoleApp18.Models.History;
+using ConsoleApp18.Models.Registration.DoctorPanel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ConsoleApp18.Models.Email
     {
         public static void SendCVtoAdmin(Doctor doctor)
         {
+            Logger.SaveToCheck("Email sent.");
             string adminEmail = "ibadcavid35@gmail.com";
             string appPassword = "hiab nulk tuks tytx";
 

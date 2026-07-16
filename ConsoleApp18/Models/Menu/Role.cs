@@ -1,5 +1,6 @@
 ﻿using ConsoleApp18.Models.History;
 using ConsoleApp18.Models.Registration;
+using ConsoleApp18.Models.Registration.AdminPanel;
 using ConsoleApp18.Models.Registration.DoctorPanel;
 using ConsoleApp18.Models.Registration.UserPanel;
 using System;
@@ -20,6 +21,9 @@ namespace ConsoleApp18.Models.Menu
             while (isRun)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("=== WELCOME TO HOSPITAL ===");
+                Console.ResetColor();
                 string[] choices = { "Admin ", "User", "Doctor", "Exit" };
                 for (int i = 0; i < choices.Length; i++)
                 {
@@ -40,10 +44,10 @@ namespace ConsoleApp18.Models.Menu
                 {
                     if (select == 0)
                     {
-
+                        Admin.ApproveDoctors();
                     }
                     else if (select == 1)
-                    { 
+                    {
                         User user = new User();
                         user.Registr(UserRegistration.Users);
                     }

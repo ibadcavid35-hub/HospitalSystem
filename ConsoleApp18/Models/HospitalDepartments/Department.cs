@@ -1,4 +1,4 @@
-﻿using ConsoleApp18.Models.Exception;
+﻿using ConsoleApp18.Models.CustomException;
 using ConsoleApp18.Models.Files;
 using ConsoleApp18.Models.Registration;
 using ConsoleApp18.Models.Registration.DoctorPanel;

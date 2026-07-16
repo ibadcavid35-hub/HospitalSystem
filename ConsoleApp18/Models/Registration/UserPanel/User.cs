@@ -1,4 +1,4 @@
-﻿using ConsoleApp18.Models.Exception;
+﻿using ConsoleApp18.Models.CustomException;
 using System;
 using System.Collections.Generic;
 using System.Linq;
