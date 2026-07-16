@@ -7,6 +7,7 @@ namespace ConsoleApp18
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Role.ChooseRole();
         }
     }

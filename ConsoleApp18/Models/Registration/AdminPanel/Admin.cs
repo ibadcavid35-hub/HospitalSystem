@@ -47,8 +47,9 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
                 DoctorRecruitment.SaveDoctors(mainList,false);
                 pendingList.Remove(approvedDoc);
                 DoctorRecruitment.SaveDoctors(pendingList,true);
-
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"\n[Successful] {approvedDoc.Name} {approvedDoc.Surname} approved and added to the main system!");
+                Console.ResetColor();
             }
 
             else

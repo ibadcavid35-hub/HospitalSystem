@@ -56,7 +56,8 @@ namespace ConsoleApp18.Models.HospitalDepartments
         private static bool SelectDoctor(DepartmentType department, Person user)
         {
             Logger.SaveToCheck("Doctor selected");
-            var doctorInDept = DoctorRegistration.Doctors.Where(d => d.Department == department && d.IsApproved == true).ToList();
+            var allDoctors = DoctorRegistration.Doctors;
+            var doctorInDept = allDoctors.Where(d => d.Department == department && d.IsApproved == true).ToList();
             if (!doctorInDept.Any())
             {
                 try
@@ -104,14 +105,14 @@ namespace ConsoleApp18.Models.HospitalDepartments
                 if (key.Key == ConsoleKey.Enter)
                 {
                     if (select == choices.Length - 1) { isRun = false; break; }
-                    bool reserved = SelectSlot(doctorInDept[select], user);
+                    bool reserved = SelectSlot(doctorInDept[select], user,allDoctors);
                     if (reserved) { return true; }
                 }
             }
             return false;
         }
 
-        private static bool SelectSlot(Doctor doctor, Person user)
+        private static bool SelectSlot(Doctor doctor, Person user,List<Doctor> allDoctors)
         {
             Logger.SaveToCheck("Time slot selected");
             int select = 0;
@@ -164,7 +165,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
                     slot.IsReserved = true;
                     slot.ReservedByName = $"{user.Name} {user.Surname}";
                     slot.ReservedByPhone = user.Number;
-                    FileHelper.SaveData(DoctorRegistration.Doctors, "doctors");
+                    FileHelper.SaveData(allDoctors, "doctors");
 
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Green;
