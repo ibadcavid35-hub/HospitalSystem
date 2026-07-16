@@ -109,11 +109,10 @@ namespace ConsoleApp18.Models.Registration
                         {
                             if (!isExist)
                             {
-                                People!.Add(person);
-                                string fileName = typeof(T) == typeof(User) ? "users" : "doctors";
-                                FileHelper.SaveData(People, fileName);
                                 if (typeof(T) == typeof(User))
                                 {
+                                    People!.Add(person);
+                                    FileHelper.SaveData(People, "users");
                                     bool registered = Department.SelectDepartment(person);
                                     if (registered) { isRun = false; }
                                 }

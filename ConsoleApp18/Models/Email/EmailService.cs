@@ -41,7 +41,9 @@ namespace ConsoleApp18.Models.Email
                 smtpServer.EnableSsl = true;
 
                 smtpServer.Send(mail);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("SMTP: The message was sent successfully.");
+                Console.ResetColor();
             }
             catch (Exception ex)
             {

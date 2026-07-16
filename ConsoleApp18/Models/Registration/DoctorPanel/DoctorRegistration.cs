@@ -11,7 +11,7 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
     public class DoctorRegistration : Person
     {
-        public static List<Doctor> Doctors { get; set; } = FileHelper.LoadData<Doctor>("doctors");
+        public static List<Doctor> Doctors => FileHelper.LoadData<Doctor>("doctors");
 
 
     }
