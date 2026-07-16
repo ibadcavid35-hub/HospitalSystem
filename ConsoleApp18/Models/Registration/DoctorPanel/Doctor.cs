@@ -65,7 +65,6 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
                 {
                     Department = departments[select];
 
-                    
                     this.IsApproved = false;
                     List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(true);
                     pendingList.Add(this);

@@ -37,22 +37,20 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
             Console.Write("\nEnter the email address of the doctor you want to verify: ");
             string selectedEmail = Console.ReadLine();
 
-            Doctor approvedDoc = pendingList.Find(d => d.Email.Equals(selectedEmail, StringComparison.OrdinalIgnoreCase));
+            Doctor approvedDoc = pendingList.Find(d => d.Email.Equals(selectedEmail));
 
             if (approvedDoc != null)
             {
                 approvedDoc.IsApproved = true;
-
                 List<Doctor> mainList = DoctorRecruitment.ReadDoctors(isPendingFile: false);
                 mainList.Add(approvedDoc);
                 DoctorRecruitment.SaveDoctors(mainList, isPendingFile: false);
-
                 pendingList.Remove(approvedDoc);
                 DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
-              
 
                 Console.WriteLine($"\n[Successful] {approvedDoc.Name} {approvedDoc.Surname} approved and added to the main system!");
             }
+
             else
             {
                 try

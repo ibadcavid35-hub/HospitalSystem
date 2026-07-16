@@ -19,6 +19,8 @@ namespace ConsoleApp18.Models.Email
             string adminEmail = "ibadcavid35@gmail.com";
             string appPassword = "hiab nulk tuks tytx";
 
+            
+
             try
             {
 
@@ -32,7 +34,11 @@ namespace ConsoleApp18.Models.Email
                     $"Department: {doctor.Department}\n" +
                     $"Expierence: {doctor.Experience}";
 
-              
+                string CvPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "doctor_cv.pdf");
+                if (File.Exists(CvPath))
+                {
+                    mail.Attachments.Add(new Attachment(CvPath));
+                }
 
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
                 smtpServer.Port = 587;
