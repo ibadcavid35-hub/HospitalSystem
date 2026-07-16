@@ -18,7 +18,7 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
             Console.Clear();
             Console.WriteLine("=== Admin confirmation panel ===");
 
-            List<Doctor> pendingList = JsonStorage.ReadDoctors(isPendingFile: true);
+            List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(isPendingFile: true);
 
             if (pendingList.Count == 0)
             {
@@ -43,13 +43,13 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
             {
                 approvedDoc.IsApproved = true;
 
-                List<Doctor> mainList = JsonStorage.ReadDoctors(isPendingFile: false);
+                List<Doctor> mainList = DoctorRecruitment.ReadDoctors(isPendingFile: false);
                 mainList.Add(approvedDoc);
-                JsonStorage.SaveDoctors(mainList, isPendingFile: false);
+                DoctorRecruitment.SaveDoctors(mainList, isPendingFile: false);
 
                 // Müvəqqəti siyahıdan silirik
                 pendingList.Remove(approvedDoc);
-                JsonStorage.SaveDoctors(pendingList, isPendingFile: true);
+                DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
 
                 Console.WriteLine($"\n[Successful] {approvedDoc.Name} {approvedDoc.Surname} approved and added to the main system!");
             }

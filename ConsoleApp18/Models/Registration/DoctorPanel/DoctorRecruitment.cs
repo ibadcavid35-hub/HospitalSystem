@@ -1,34 +1,49 @@
-﻿using ConsoleApp18.Models.History;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
-    public class DoctorRecruitment
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text.Json;
+
+    namespace ConsoleApp18.Models.Registration.DoctorPanel
     {
-        private static readonly string pendingPath = "pending_doctors.json";
-        private static readonly string doctorPath = "doctors.json";
-
-        public static List<Doctor> ReadDoctors(bool isPendingFile)
+        public static class DoctorRecruitment
         {
-            string path = (isPendingFile ? pendingPath : doctorPath);
-            if (!File.Exists(path)) { return new List<Doctor>(); }
-            string readAllDoctors = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<List<Doctor>>(readAllDoctors) ?? new List<Doctor>();
-        }
+            private static readonly string PendingFilePath = "pending_doctors.json";
+            private static readonly string MainFilePath = "doctors.json";
 
-        public static void SaveDoctors(List<Doctor> doctors,bool isPendingFile)
-        {
-            Logger.SaveToCheck("Email sent.");
-            string path = (isPendingFile) ? pendingPath : doctorPath;
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string save = JsonSerializer.Serialize(doctors, options);
-            File.WriteAllText(path, save);
+            public static List<Doctor> ReadDoctors(bool isPendingFile)
+            {
+                string path = isPendingFile ? PendingFilePath : MainFilePath;
+
+                if (!File.Exists(path))
+                    return new List<Doctor>();
+
+                try
+                {
+                    string jsonString = File.ReadAllText(path);
+                    return JsonSerializer.Deserialize<List<Doctor>>(jsonString) ?? new List<Doctor>();
+                }
+                catch
+                {
+                    return new List<Doctor>();
+                }
+            }
+
+            public static void SaveDoctors(List<Doctor> doctors, bool isPendingFile)
+            {
+                string path = isPendingFile ? PendingFilePath : MainFilePath;
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string jsonString = JsonSerializer.Serialize(doctors, options);
+                File.WriteAllText(path, jsonString);
+            }
         }
     }
+
 }

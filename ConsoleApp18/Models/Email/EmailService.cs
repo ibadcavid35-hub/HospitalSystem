@@ -25,7 +25,7 @@ namespace ConsoleApp18.Models.Email
                 mail.From = new MailAddress(adminEmail);
                 mail.To.Add(adminEmail); 
                 mail.Subject = $"[New doctor's appointment] - {doctor.Name}";
-                mail.Body = $"Admin, there is a new request:\nName: {doctor.Name}\nEmail: {doctor.Email}";
+                mail.Body = $"Admin, there is a new request:\nName: {doctor.Name} {doctor.Surname}\nEmail: {doctor.Email}";
 
                 if (!string.IsNullOrEmpty(doctor.CVPath) && System.IO.File.Exists(doctor.CVPath))
                 {

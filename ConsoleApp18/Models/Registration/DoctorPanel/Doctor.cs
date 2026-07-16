@@ -67,9 +67,9 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
 
                     this.CVPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "doctor_cv.pdf");
                     this.IsApproved = false;
-                    List<Doctor> pendingList = JsonStorage.ReadDoctors(isPendingFile: true);
+                    List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(isPendingFile: true);
                     pendingList.Add(this);
-                    JsonStorage.SaveDoctors(pendingList, isPendingFile: true);
+                    DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
                     EmailService.SendCVtoAdmin(this);
                     Console.WriteLine("\n[MƏLUMAT]: CV faylınız sistem tərəfindən avtomatik əlavə olundu və adminə göndərildi!");
                     isRun = false; 

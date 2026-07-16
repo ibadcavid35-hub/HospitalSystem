@@ -199,6 +199,8 @@ namespace ConsoleApp18.Models.Registration
                                     {
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine(nfe.Message); Console.ResetColor();
+                                        Console.WriteLine("Press any key to try again...");
+                                        Console.ReadKey(true);
                                     }
 
                                 }
@@ -242,6 +244,8 @@ namespace ConsoleApp18.Models.Registration
                                     {
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine(nfe.Message); Console.ResetColor();
+                                        Console.WriteLine("Press any key to try again...");
+                                        Console.ReadKey(true);
                                     }
 
                                 }
