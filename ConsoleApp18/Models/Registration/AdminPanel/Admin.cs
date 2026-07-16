@@ -42,11 +42,11 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
             if (approvedDoc != null)
             {
                 approvedDoc.IsApproved = true;
-                List<Doctor> mainList = DoctorRecruitment.ReadDoctors(isPendingFile: false);
+                List<Doctor> mainList = DoctorRecruitment.ReadDoctors(false);
                 mainList.Add(approvedDoc);
-                DoctorRecruitment.SaveDoctors(mainList, isPendingFile: false);
+                DoctorRecruitment.SaveDoctors(mainList,false);
                 pendingList.Remove(approvedDoc);
-                DoctorRecruitment.SaveDoctors(pendingList, isPendingFile: true);
+                DoctorRecruitment.SaveDoctors(pendingList,true);
 
                 Console.WriteLine($"\n[Successful] {approvedDoc.Name} {approvedDoc.Surname} approved and added to the main system!");
             }
