@@ -1,5 +1,5 @@
 ﻿using ConsoleApp18.Models.Registration.DoctorPanel;
-using ConsoleApp18.Models.Registration.DoctorPanel.ConsoleApp18.Models.Registration.DoctorPanel;
+using ConsoleApp18.Models.Registration.DoctorPanel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

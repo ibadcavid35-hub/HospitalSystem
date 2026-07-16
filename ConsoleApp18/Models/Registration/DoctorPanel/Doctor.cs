@@ -2,7 +2,7 @@
 using ConsoleApp18.Models.CustomException;
 using ConsoleApp18.Models.Email;
 using ConsoleApp18.Models.HospitalDepartments;
-using ConsoleApp18.Models.Registration.DoctorPanel.ConsoleApp18.Models.Registration.DoctorPanel;
+using ConsoleApp18.Models.Registration.DoctorPanel;
 
 namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
