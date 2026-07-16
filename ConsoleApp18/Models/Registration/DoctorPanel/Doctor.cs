@@ -19,6 +19,8 @@ namespace ConsoleApp18.Models.Registration.DoctorPanel
             new TimeSlot { Time = "12:00-14:00" },
             new TimeSlot { Time = "15:00-17:00" }
         };
+        public string? CVPath { get; set; }
+        public bool IsApproved { get; set; }
 
         public override void ToEnterExtra()
         {

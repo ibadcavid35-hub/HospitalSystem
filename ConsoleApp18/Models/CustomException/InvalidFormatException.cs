@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp18.Models.Exception
+namespace ConsoleApp18.Models.CustomException
 {
     public class InvalidFormatException : ApplicationException
     {

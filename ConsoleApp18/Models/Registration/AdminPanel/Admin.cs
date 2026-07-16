@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp18.Models.CV
+namespace ConsoleApp18.Models.Registration.AdminPanel
 {
-    public class DoctorCV
+    public class Admin
     {
 
     }
