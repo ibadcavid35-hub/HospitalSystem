@@ -13,8 +13,7 @@ namespace ConsoleApp18.Models.Files
     {
         private static JsonSerializerOptions serializerOptions = new JsonSerializerOptions()
         {
-            WriteIndented = true,
-            IncludeFields = true
+            WriteIndented = true
         };
 
         public static void SaveData<T>(List<T> data, string fileName) where T : Person
