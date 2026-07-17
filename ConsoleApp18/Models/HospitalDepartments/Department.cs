@@ -105,14 +105,14 @@ namespace ConsoleApp18.Models.HospitalDepartments
                 if (key.Key == ConsoleKey.Enter)
                 {
                     if (select == choices.Length - 1) { isRun = false; break; }
-                    bool reserved = SelectSlot(doctorInDept[select], user, allDoctors);
+                    bool reserved = SelectSlot(doctorInDept[select], user);
                     if (reserved) { return true; }
                 }
             }
             return false;
         }
 
-        private static bool SelectSlot(Doctor doctor, Person user,List<Doctor> allDoctors)
+        private static bool SelectSlot(Doctor doctor, Person user)
         {
             Logger.SaveToCheck($"{user.Name} {user.Surname} selected time slot");
             int select = 0;
