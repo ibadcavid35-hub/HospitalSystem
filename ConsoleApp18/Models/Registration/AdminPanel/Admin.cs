@@ -18,7 +18,7 @@ namespace ConsoleApp18.Models.Registration.AdminPanel
             Console.WriteLine("=== Admin confirmation panel ===");
             Console.ResetColor();
 
-            List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(isPendingFile: true);
+            List<Doctor> pendingList = DoctorRecruitment.ReadDoctors(true);
 
             if (pendingList.Count == 0)
             {
