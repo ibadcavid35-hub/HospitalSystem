@@ -16,7 +16,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
     {
         public static bool SelectDepartment(Person user)
         {
-            Logger.SaveToCheck("Department selected");
+            Logger.SaveToCheck($"{user.Name} {user.Surname} Department selected");
             int select = 0;
             bool isRun = true;
             Thread.Sleep(2000);
@@ -55,7 +55,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
 
         private static bool SelectDoctor(DepartmentType department, Person user)
         {
-            Logger.SaveToCheck("Doctor selected");
+            Logger.SaveToCheck($"{user.Name} {user.Surname} selected doctor");
             var allDoctors = DoctorRegistration.Doctors;
             var doctorInDept = allDoctors.Where(d => d.Department == department && d.IsApproved == true).ToList();
             if (!doctorInDept.Any())
@@ -105,7 +105,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
                 if (key.Key == ConsoleKey.Enter)
                 {
                     if (select == choices.Length - 1) { isRun = false; break; }
-                    bool reserved = SelectSlot(doctorInDept[select], user,allDoctors);
+                    bool reserved = SelectSlot(doctorInDept[select], user, allDoctors);
                     if (reserved) { return true; }
                 }
             }
@@ -114,7 +114,7 @@ namespace ConsoleApp18.Models.HospitalDepartments
 
         private static bool SelectSlot(Doctor doctor, Person user,List<Doctor> allDoctors)
         {
-            Logger.SaveToCheck("Time slot selected");
+            Logger.SaveToCheck($"{user.Name} {user.Surname} selected time slot");
             int select = 0;
             bool isRun = true;
             while (isRun)
@@ -162,10 +162,9 @@ namespace ConsoleApp18.Models.HospitalDepartments
                         Console.ReadKey(true);
                         continue;
                     }
+                    
                     slot.IsReserved = true;
                     slot.ReservedByName = $"{user.Name} {user.Surname}";
-                    slot.ReservedByPhone = user.Number;
-                    FileHelper.SaveData(allDoctors, "doctors");
 
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Green;

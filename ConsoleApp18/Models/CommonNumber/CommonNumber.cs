@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp18.Models.CommonNumber
 {
-    public static class CommonNumber
+    public static class CommonNumberClass
     {
         public static string CommonPhoneNumber(string number)
         {

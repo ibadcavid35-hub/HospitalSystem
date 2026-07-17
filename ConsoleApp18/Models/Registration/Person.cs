@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ConsoleApp18.Models.CommonNumber;
 
 namespace ConsoleApp18.Models.Registration
 {
@@ -55,7 +56,7 @@ namespace ConsoleApp18.Models.Registration
                     Console.Write("Enter your phone number: "); string inputNumber = Console.ReadLine() ?? "";
                     if (Regex.IsMatch(inputNumber, phonePattern))
                     {
-                        Number = CommonNumber.CommonNumber.CommonPhoneNumber(inputNumber);
+                        Number = CommonNumberClass.CommonPhoneNumber(inputNumber);
                         break;
                     }
                     else throw new InvalidFormatException("phone number");
@@ -66,12 +67,14 @@ namespace ConsoleApp18.Models.Registration
                     Console.WriteLine(ife.Message); Console.ResetColor();
                 }
             }
+
             ToEnterExtra();
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("You have registered."); Console.ResetColor();
         }
 
-        public virtual void ToEnterExtra() { }
+        public virtual void ToEnterExtra() { } 
 
         public void Registr<T>(List<T> People) where T : Person, new()
         {
@@ -202,7 +205,7 @@ namespace ConsoleApp18.Models.Registration
                                     Console.Clear();
                                     Console.Write("Enter your phone number: ");
                                     string inputNumber = Console.ReadLine() ?? "";
-                                    inputNumber = CommonNumber.CommonNumber.CommonPhoneNumber(inputNumber);
+                                    inputNumber = CommonNumberClass.CommonPhoneNumber(inputNumber);
                                     Person? foundUser = People!.FirstOrDefault(x => x.Number == inputNumber);
                                     try
                                     {

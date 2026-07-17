@@ -11,6 +11,5 @@ namespace ConsoleApp18.Models.Appointments
         public string? Time { get; set; }
         public bool IsReserved { get; set; }
         public string? ReservedByName { get; set; }
-        public string? ReservedByPhone { get; set; }
     }
 }
