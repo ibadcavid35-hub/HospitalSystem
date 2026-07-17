@@ -74,7 +74,7 @@ namespace ConsoleApp18.Models.Registration
             Console.WriteLine("You have registered."); Console.ResetColor();
         }
 
-        public virtual void ToEnterExtra() { } 
+        public virtual void ToEnterExtra() { }
 
         public void Registr<T>(List<T> People) where T : Person, new()
         {
@@ -175,16 +175,13 @@ namespace ConsoleApp18.Models.Registration
                                                 bool registered = Department.SelectDepartment(foundUser);
                                                 if (registered) { isLogged = false; isRun = false; }
                                             }
-                                            else
-                                            {
 
-                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                Console.WriteLine("You can check your job application status in the Admin Panel.");
-                                                Console.ResetColor();
-                                                Console.WriteLine("Press any key to continue...");
-                                                Console.ReadKey(true);
 
-                                            }
+
+                                            Console.WriteLine("Press any key to continue...");
+                                            Console.ReadKey(true);
+
+
                                         }
                                         else
                                         {
