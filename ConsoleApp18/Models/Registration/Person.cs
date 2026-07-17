@@ -176,11 +176,8 @@ namespace ConsoleApp18.Models.Registration
                                                 if (registered) { isLogged = false; isRun = false; }
                                             }
 
-
-
                                             Console.WriteLine("Press any key to continue...");
                                             Console.ReadKey(true);
-
 
                                         }
                                         else
@@ -217,16 +214,9 @@ namespace ConsoleApp18.Models.Registration
                                                 bool registered = Department.SelectDepartment(foundUser);
                                                 if (registered) { isLogged = false; isRun = false; }
                                             }
-                                            else
-                                            {
 
-                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                Console.WriteLine("You can check your job application status in the Admin Panel.");
-                                                Console.ResetColor();
-                                                Console.WriteLine("Press any key to continue...");
-                                                Console.ReadKey(true);
-
-                                            }
+                                            Console.WriteLine("Press any key to continue...");
+                                            Console.ReadKey(true);
                                         }
                                         else
                                         {
