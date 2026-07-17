@@ -5,40 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
+using ConsoleApp18.Models.Files;
 
 namespace ConsoleApp18.Models.Registration.DoctorPanel
 {
 
-
-
     public static class DoctorRecruitment
     {
-        private static readonly string PendingFilePath = "pending_doctors.json";
-        private static readonly string MainFilePath = "doctors.json";
+        private static readonly string PendingFilePath = "pending_doctors";
+        private static readonly string MainFilePath = "doctors";
 
         public static List<Doctor> ReadDoctors(bool isPendingFile)
         {
             string path = isPendingFile ? PendingFilePath : MainFilePath;
-
-            if (!File.Exists(path)) return new List<Doctor>();
-
-            try
-            {
-                string jsonString = File.ReadAllText(path);
-                return JsonSerializer.Deserialize<List<Doctor>>(jsonString) ?? new List<Doctor>();
-            }
-            catch
-            {
-                return new List<Doctor>();
-            }
+            return FileHelper.LoadData<Doctor>(path);
         }
 
         public static void SaveDoctors(List<Doctor> doctors, bool isPendingFile)
         {
             string path = isPendingFile ? PendingFilePath : MainFilePath;
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(doctors, options);
-            File.WriteAllText(path, jsonString);
+            FileHelper.SaveData<Doctor>(doctors, path);
         }
 
     }

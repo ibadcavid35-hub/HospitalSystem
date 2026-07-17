@@ -16,14 +16,14 @@ namespace ConsoleApp18.Models.Files
             WriteIndented = true
         };
 
-        public static void SaveData<T>(List<T> data, string fileName) where T : Person
+        public static void SaveData<T>(List<T> data, string fileName)
         {
             string filePath = $"{fileName}.json";
             string json = JsonSerializer.Serialize(data, serializerOptions);
             File.WriteAllText(filePath, json);
         }
 
-        public static List<T> LoadData<T>(string fileName) where T : Person
+        public static List<T> LoadData<T>(string fileName)
         {
             string filePath = $"{fileName}.json";
             if (!File.Exists(filePath)) { return new List<T>(); }
